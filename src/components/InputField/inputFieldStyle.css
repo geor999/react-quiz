@@ -1,0 +1,117 @@
+.input-field {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: flex-end;
+  position: relative;
+  width: 320px;
+}
+
+.input-field .label-stack {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.input-field .label {
+  color: #000000bf;
+  flex: 1;
+  font-family: "Inter-Medium", Helvetica;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  line-height: 16px;
+  margin-top: -1px;
+  position: relative;
+}
+
+.input-field .text-input {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  position: relative;
+  width: 100%;
+  border: 2.19px solid !important;
+  border-radius: 7.12px !important;
+  border-color: #cbd2e0 !important;
+  gap: 4.75px !important;
+  height: 52.25px !important;
+  background-color: white;
+  padding-left: 3px;
+}
+
+.input-field .value {
+  flex: 1;
+  font-family: var(--WF-body-body-medium-font-family);
+  font-size: var(--WF-body-body-medium-font-size);
+  font-style: var(--WF-body-body-medium-font-style);
+  font-weight: var(--WF-body-body-medium-font-weight);
+  letter-spacing: var(--WF-body-body-medium-letter-spacing);
+  line-height: var(--WF-body-body-medium-line-height);
+  height: fit-content;
+  position: relative;
+  border: 0;
+  min-height: 80%;
+  max-width: 90%;
+}
+
+.input-field .value input {
+  outline: none;
+}
+
+.input-field .active {
+  background-color: #ffffff;
+  border-color: #000000;
+}
+
+.input-field .disabled {
+  background-color: #eaecf2;
+  border-color: #cbd2e0;
+}
+
+.input-field .default {
+  background-color: #ffffff;
+  border-color: #cbd2e0;
+}
+
+.input-field .default-empty {
+  border-color: #cbd2e0;
+}
+
+.input-field .success {
+  background-color: #ffffff;
+  border-color: #22b81f;
+}
+
+.input-field .error {
+  border-color: #e92929 !important;
+}
+
+.input-field .text-input.active .value {
+  color: #2d3648;
+}
+
+.input-field .text-input.disabled .value {
+  color: #bec8db;
+}
+
+.input-field .text-input.default .value {
+  color: #2d3648;
+}
+
+.input-field .text-input.default-empty .value {
+  color: #b9b9b9;
+}
+
+.input-field .text-input.success .value {
+  color: #2d3648;
+}
+
+.input-field .text-input.error .value {
+  color: #2d3648;
+}
