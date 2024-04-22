@@ -170,15 +170,18 @@
     border-right-style: solid;
     border-right-width: 1px;
     display: flex;
-    flex: 0 0 auto;
+    flex-direction: column;
+    position: relative;
+    min-height: 500px; 
+    justify-content: space-between;
+    padding-bottom: 24px;
+  }
+  .desktop .frame-7
+  {padding: 24px;
+    display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 24px 0px;
-    position: relative;
-    width: 100%;
-    min-height: 500px;
   }
-  
   .desktop .input-field-instance {
     flex: 0 0 auto !important;
     gap: 4.75px !important;
@@ -215,8 +218,6 @@
     text-align: center;
     opacity: 0.8;
     transition: 0.3s;
-    position: absolute;
-  bottom: 30px;
   }
 
   .button:hover {

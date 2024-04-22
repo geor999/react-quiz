@@ -84,11 +84,10 @@
 }
 
 .input-field .success {
-  background-color: #ffffff;
   border-color: #22b81f;
 }
 
-.input-field .error {
+.input-field.error {
   border-color: #e92929 !important;
 }
 
@@ -114,4 +113,12 @@
 
 .input-field .text-input.error .value {
   color: #2d3648;
+}
+
+.input-feedback.error{
+  color: red;
+}
+
+.input-feedback.no-error{
+  color: green;
 }
