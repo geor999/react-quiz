@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import PropTypes from "prop-types";
-import React,{useState, useEffect} from "react";
+import {PropTypes, props} from "prop-types";
+import React, { useState, useEffect } from "react";
+import { useDebounce } from 'use-debounce';//debounce for inputs
 import "./inputFieldStyle.css";
 
 export const InputField = ({
@@ -23,22 +24,23 @@ export const InputField = ({
   type,
   icon,
   clearInput,
-  changed
-}) => {
+  changed,
+  num,
+  parentCallback}) => {
 
   const [inputValue, setInputValue] = useState("");
-
+  const [valueDebounce] = useDebounce(inputValue, 1000);
   // Function to handle input change
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
 
   useEffect(() => {
-    if (clearInput) {
-      console.log("asdzc " +clearInput)
-      setInputValue("");
-    }
-  }, [changed, clearInput]);
+    setInputValue("");
+  }, [changed]);
+
+  useEffect(() => {
+    parentCallback(
+      valueDebounce, num
+    );
+  }, [valueDebounce]);
 
   return (
     <div className={`input-field ${className}`}>
@@ -49,12 +51,17 @@ export const InputField = ({
       )}
       <div className={`text-input ${state} ${textInputClassName}`}>
         <img src={`src/assets/${icon}.svg`} />
+        <label htmlFor={`${text.toLocaleLowerCase()}`} ></label>
         <input
           type={`${type}`}
           className={`value ${divClassNameOverride}`}
           placeholder={`${valueContent}`}
           value={inputValue}
-          onChange={handleChange}
+          onChange={(e) => {
+            setInputValue(e.target.value);}}
+          id={`${text.toLocaleLowerCase()}`}
+          name={`${text.toLocaleLowerCase()}`}
+          
         ></input>
       </div>
       {state === "error" && (
@@ -87,4 +94,6 @@ InputField.propTypes = {
   type: PropTypes.string,
   icon: PropTypes.string,
   clearInput: PropTypes.bool,
+  num: PropTypes.string,
+  parentCallback: PropTypes.func
 };

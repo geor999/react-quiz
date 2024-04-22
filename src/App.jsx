@@ -12,6 +12,11 @@ export default function App() {
     setClearInput(!clearInput);
   };
 
+ 
+
+  const handleInputCallback = (childData,num) => {console.log(childData+"   "+ num)
+};
+
   return (
     <div className="desktop">
       <div className="frame">
@@ -27,33 +32,30 @@ export default function App() {
             <div className="text-wrapper">Quizionnaire</div>
             <div className="frame-2">
               <div
-                className={`frame-3 ${
-                  isClicked ? "active" : "non-active"
-                }`}
+                className={`frame-3 ${isClicked ? "active" : "non-active"
+                  }
+                ${isClicked ? "active" : "non-active"
+                  }`}
               >
                 <button
-                  className={`${
-                    isClicked ? "frame-4" : "frame-5"
-                  }`}
+                  className={`${isClicked ? "frame-4" : "frame-5"
+                    }`}
                   onClick={handleClick}
                 >
-                  <div className={`${
-                    isClicked ? "text-wrapper-2" : "text-wrapper-3"
-                  }`}>Register</div>
+                  <div className={`${isClicked ? "text-wrapper-2" : "text-wrapper-3"
+                    }`}>Register</div>
                 </button>
                 <button
-                  className={`${
-                    !isClicked ? "frame-4" : "frame-5"
-                  }`}
+                  className={`${!isClicked ? "frame-4" : "frame-5"
+                    }`}
                   onClick={handleClick}
                 >
-                  <div className={`${
-                    !isClicked ? "text-wrapper-2" : "text-wrapper-3"
-                  }`}>Login</div>
+                  <div className={`${!isClicked ? "text-wrapper-2" : "text-wrapper-3"
+                    }`}>Login</div>
                 </button>
               </div>
-              <div
-                className={'frame-6'}
+              <form
+                className={'frame-6'} 
               >
                 <InputField
                   className="input-field-instance"
@@ -70,8 +72,10 @@ export default function App() {
                   valueContent="Name"
                   type="text"
                   icon="user"
+                  num="0"
                   clearInput={clearInput}
                   changed={clearInput}
+                  parentCallback={handleInputCallback}
                 />
 
                 <InputField
@@ -85,8 +89,10 @@ export default function App() {
                   valueContent="Email"
                   type="email"
                   icon="at"
+                  num="1"
                   clearInput={clearInput}
                   changed={clearInput}
+                  parentCallback={handleInputCallback}
                 />
 
                 {isClicked && (
@@ -102,8 +108,10 @@ export default function App() {
                     valueContent="Password"
                     type="password"
                     icon="lock"
+                    num="2"
                     clearInput={clearInput}
                     changed={clearInput}
+                    parentCallback={handleInputCallback}
                   />
                 )}
 
@@ -114,21 +122,22 @@ export default function App() {
                     divClassNameOverride="input-field-4"
                     labelStackClassName="design-component-instance-node"
                     errorMessage="Passwords don't match"
-                    state="default"
+                    state="default-empty"
                     text="Re-type Password"
                     textInputClassName="input-field-3"
                     valueContent="Password"
                     type="password"
                     icon="lock"
+                    num="3"
                     clearInput={clearInput}
                     changed={clearInput}
+                    parentCallback={handleInputCallback}
                   />
                 )}
 
-                <button className="button">
-                  {isClicked ? "Register" : "Login"}
-                </button>
-              </div>
+                <input className="button" type="Submit" value={`${isClicked ? "Register" : "Login"}`}>
+                </input>
+              </form>
             </div>
           </div>
         </div>
