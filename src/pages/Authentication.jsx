@@ -1,9 +1,11 @@
 // React Component
 import React, { useEffect, useState } from "react";
-import { InputField } from "./components/InputField/InputField";
+import {Routes,Route,Link,useNavigate } from "react-router-dom";
+import { InputField } from "../components/InputField/InputField";
 import "./style.css";
 
-export default function App() {
+export default function Authentication({rootDarkMode}) {
+  const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(true);
   const [clearInput, setClearInput] = useState(false);
   const [inputs, setInputs] = useState([
@@ -14,7 +16,12 @@ export default function App() {
   ]);
   const [passwordState, setPasswordState] = useState("default-empty");
   const [passwordMatch, setPasswordMatch] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(rootDarkMode);
+
+  useEffect(()=>{
+    setDarkMode(rootDarkMode);
+  },[rootDarkMode])
+
   const handleClick = () => {
     setIsClicked(!isClicked);
     setClearInput(!clearInput);
@@ -54,8 +61,8 @@ export default function App() {
           if (inputs[1].state == "no-error") {
             if (inputs[0].value != "") {
               event.preventDefault();
-              alert(event);
-              console.log(event);
+              //CODE FOR API CALL 
+              navigate('/giannis')
             } else {
               event.preventDefault();
               alert("Your username field is empty.");
@@ -76,7 +83,8 @@ export default function App() {
         alert("Please fill all the inputs!");
       } else {
         event.preventDefault();
-        alert("logged in succesfully");
+        //CODE FOR API CALL
+        navigate('/giannis')
       }
     }
   };
@@ -92,21 +100,6 @@ export default function App() {
     }
   }, [inputs]);
   return (
-    <div className={`desktop ${darkMode ? "dark" : ""}`}>
-      <div className={`frame ${darkMode ? "dark" : ""}`}>
-        <img
-          className="vector"
-          alt="Vector"
-          src={`${
-            darkMode
-              ? "src/assets/dark-mode-toggle-icon.svg"
-              : "src/assets/light-mode-toggle-icon.svg"
-          }`}
-          onClick={() => {
-            setDarkMode(!darkMode);
-          }}
-        />
-      </div>
       <div className={`frame-wrapper ${darkMode ? "dark" : ""}`}>
         <div className={`div-wrapper ${darkMode ? "dark" : ""}`}>
           <div className="div">
@@ -249,6 +242,5 @@ export default function App() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
