@@ -1,6 +1,6 @@
 // React Component
 import React, { useEffect, useState } from "react";
-import { InputField } from "./components/InputField";
+import { InputField } from "./components/InputField/InputField";
 import "./style.css";
 
 export default function App() {
