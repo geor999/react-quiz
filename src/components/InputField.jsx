@@ -6,20 +6,13 @@ import { useDebounce } from "use-debounce"; //debounce for inputs
 import "./inputFieldStyle.css";
 
 export const InputField = ({
-  value = true,
   rightIcon,
   helpIcon = false,
   label = true,
   errorMessage = false,
   valueContent = "Value",
-  successMessage = false,
   state,
-  className,
-  labelStackClassName,
-  divClassName,
   text = "Label",
-  textInputClassName,
-  divClassNameOverride,
   type,
   icon,
   clearInput,
@@ -27,6 +20,7 @@ export const InputField = ({
   num,
   parentCallback,
   match,
+  darkMode
 }) => {
 
   const [inputValue, setInputValue] = useState("");
@@ -39,6 +33,10 @@ export const InputField = ({
 
   // Function to handle input change
   useEffect(() => {
+    if(inputValue=="" && inputState!="default-empty")
+    {
+      setInputState("default-empty")
+    }
   }, [inputValue]);
 
   useEffect(() => {
@@ -59,20 +57,20 @@ export const InputField = ({
     return regex.test(email);
   }
   return (
-    <div className={`input-field ${className}`}>
+    <div className={`input-field `}>
       {label && (
-        <div className={`label-stack ${labelStackClassName}`}>
-          <div className={`label ${divClassName}`}>{text}</div>
+        <div className={`label-stack ${darkMode?"dark":""}`}>
+          <div className={`label ${darkMode?"dark":""}`}>{text}</div>
         </div>
       )}
-      <div className={`text-input ${state} ${textInputClassName}`}>
+      <div className={`text-input ${inputState} ${darkMode?"dark":""}`}>
         <img src={`src/assets/${icon}.svg`} />
         <label htmlFor={`${text.toLocaleLowerCase()}`}></label>
         <input
           type={`${type}`}
-          className={`value ${divClassNameOverride}`}
+          className={`value ${darkMode?"dark":""}`}
           placeholder={`${valueContent}`}
-          //value={inputValue}
+          value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
             if (type === "password") {
@@ -132,14 +130,15 @@ export const InputField = ({
             }
           }}
           id={`${text.toLocaleLowerCase()}`}
-          name={`${text.toLocaleLowerCase()}`}
+          name={`${text.toLocaleLowerCase()}`
+        }
         ></input>
       </div>
       {inputState !== "default-empty" && !match && (
-        <div className={`input-feedback ${inputState}`}>{newErrorMessage}</div>
+        <div className={`input-feedback ${inputState} ${darkMode?"dark":""}`}>{newErrorMessage}</div>
       )}
       {match && (
-        <div className={`input-feedback no-error`}>Your passwords match!</div>
+        <div className={`input-feedback no-error ${darkMode?"dark":""}`}>Your passwords match!</div>
       )}
     </div>
   );
@@ -153,7 +152,6 @@ InputField.propTypes = {
   errorMessage: PropTypes.string,
   optionalLabel: PropTypes.bool,
   valueContent: PropTypes.string,
-  successMessage: PropTypes.bool,
   state: PropTypes.oneOf([
     "active",
     "default",
@@ -169,4 +167,5 @@ InputField.propTypes = {
   clearInput: PropTypes.bool,
   num: PropTypes.string,
   parentCallback: PropTypes.func,
+  darkMode: PropTypes.bool
 };

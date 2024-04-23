@@ -14,14 +14,15 @@ export default function App() {
   ]);
   const [passwordState, setPasswordState] = useState("default-empty");
   const [passwordMatch, setPasswordMatch] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const handleClick = () => {
     setIsClicked(!isClicked);
     setClearInput(!clearInput);
     setInputs([
-      ["default-empty", ""],
-      ["default-empty", ""],
-      ["default-empty", ""],
-      ["default-empty", ""],
+      { id: 0, state: "default-empty", value: "" },
+      { id: 1, state: "default-empty", value: "" },
+      { id: 2, state: "default-empty", value: "" },
+      { id: 3, state: "default-empty", value: "" },
     ]);
     setPasswordState("default-empty");
     setPasswordMatch(false);
@@ -45,9 +46,7 @@ export default function App() {
 
   const handleSubmit = (event) => {
     if (isClicked == true) {
-      if (
-        inputs.some(input => input.value === "")
-      ) {
+      if (inputs.some((input) => input.value === "")) {
         event.preventDefault();
         alert("Please fill all the inputs!");
       } else {
@@ -71,7 +70,8 @@ export default function App() {
         }
       }
     } else {
-      if (inputs.some(input => input.value === "")) {
+      console.log(inputs);
+      if (inputs[0].value == "" || inputs[2].value == "") {
         event.preventDefault();
         alert("Please fill all the inputs!");
       } else {
@@ -92,51 +92,69 @@ export default function App() {
     }
   }, [inputs]);
   return (
-    <div className="desktop">
-      <div className="frame">
-        {inputs[0].value}
+    <div className={`desktop ${darkMode ? "dark" : ""}`}>
+      <div className={`frame ${darkMode ? "dark" : ""}`}>
         <img
           className="vector"
           alt="Vector"
-          src="src/assets/light-mode-toggle-icon.svg"
+          src={`${
+            darkMode
+              ? "src/assets/dark-mode-toggle-icon.svg"
+              : "src/assets/light-mode-toggle-icon.svg"
+          }`}
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
         />
       </div>
-      <div className="frame-wrapper">
-        <div className="div-wrapper">
+      <div className={`frame-wrapper ${darkMode ? "dark" : ""}`}>
+        <div className={`div-wrapper ${darkMode ? "dark" : ""}`}>
           <div className="div">
-            <div className="text-wrapper">Quizionnaire</div>
-            <div className="frame-2">
+            <div className={`text-wrapper ${darkMode ? "dark" : ""}`}>
+              Quizionnaire
+            </div>
+            <div className={`frame-2 ${darkMode ? "dark" : ""}`}>
               <div
                 className={`frame-3 ${isClicked ? "active" : "non-active"}
-                ${isClicked ? "active" : "non-active"}`}
+                ${isClicked ? "active" : "non-active"} ${
+                  darkMode ? "dark" : ""
+                }`}
               >
                 <button
-                  className={`${isClicked ? "frame-4" : "frame-5"}`}
+                  className={`${isClicked ? "frame-4" : "frame-5"} ${
+                    darkMode ? "dark" : ""
+                  }`}
                   onClick={handleClick}
                 >
                   <div
                     className={`${
                       isClicked ? "text-wrapper-2" : "text-wrapper-3"
-                    }`}
+                    }
+                    ${darkMode ? "dark" : ""}`}
                   >
                     Register
                   </div>
                 </button>
                 <button
-                  className={`${!isClicked ? "frame-4" : "frame-5"}`}
+                  className={`${!isClicked ? "frame-4" : "frame-5"} ${
+                    darkMode ? "dark" : ""
+                  }`}
                   onClick={handleClick}
                 >
                   <div
                     className={`${
                       !isClicked ? "text-wrapper-2" : "text-wrapper-3"
-                    }`}
+                    } ${darkMode ? "dark" : ""}`}
                   >
                     Login
                   </div>
                 </button>
               </div>
-              <form className={"frame-6"} onSubmit={handleSubmit}>
-                <div className="frame-7">
+              <form
+                className={`frame-6 ${darkMode ? "dark" : ""}`}
+                onSubmit={handleSubmit}
+              >
+                <div className={`frame-7 ${darkMode ? "dark" : ""}`}>
                   <InputField
                     className="input-field-instance"
                     divClassName="input-field-2"
@@ -156,6 +174,7 @@ export default function App() {
                     clearInput={clearInput}
                     changed={clearInput}
                     parentCallback={handleInputCallback}
+                    darkMode={darkMode}
                   />
 
                   {isClicked && (
@@ -174,6 +193,7 @@ export default function App() {
                       clearInput={clearInput}
                       changed={clearInput}
                       parentCallback={handleInputCallback}
+                      darkMode={darkMode}
                     />
                   )}
 
@@ -194,6 +214,7 @@ export default function App() {
                     changed={clearInput}
                     parentCallback={handleInputCallback}
                     match={passwordMatch}
+                    darkMode={darkMode}
                   />
 
                   {isClicked && (
@@ -214,13 +235,14 @@ export default function App() {
                       changed={clearInput}
                       parentCallback={handleInputCallback}
                       match={passwordMatch}
+                      darkMode={darkMode}
                     />
                   )}
                 </div>
                 <input
-                  className="button"
+                  className={`button ${darkMode ? "dark" : ""}`}
                   type="Submit"
-                  value={`${isClicked ? "Register" : "Login"}`}
+                  value={`${isClicked ? "Register" : "Login"} `}
                 ></input>
               </form>
             </div>
