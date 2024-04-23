@@ -124,7 +124,7 @@ export default function App() {
                   className={`${isClicked ? "frame-4" : "frame-5"} ${
                     darkMode ? "dark" : ""
                   }`}
-                  onClick={handleClick}
+                  onClick={isClicked ? undefined : handleClick }
                 >
                   <div
                     className={`${
@@ -139,7 +139,7 @@ export default function App() {
                   className={`${!isClicked ? "frame-4" : "frame-5"} ${
                     darkMode ? "dark" : ""
                   }`}
-                  onClick={handleClick}
+                  onClick={isClicked ? handleClick : undefined }
                 >
                   <div
                     className={`${
