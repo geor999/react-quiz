@@ -28,15 +28,18 @@ export const InputField = ({
   parentCallback,
   match,
 }) => {
+
   const [inputValue, setInputValue] = useState("");
-  const [valueDebounce] = useDebounce(inputValue, 1000);
+
+  const [valueDebounce] = useDebounce(inputValue, 300);
+
   const [inputState, setInputState] = useState(state);
+
   const [newErrorMessage, setErrorMessage] = useState(errorMessage);
 
   // Function to handle input change
   useEffect(() => {
-    //setInputState(state);
-  }, [state]);
+  }, [inputValue]);
 
   useEffect(() => {
     setInputValue("");
@@ -69,7 +72,7 @@ export const InputField = ({
           type={`${type}`}
           className={`value ${divClassNameOverride}`}
           placeholder={`${valueContent}`}
-          value={inputValue}
+          //value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
             if (type === "password") {
@@ -112,7 +115,6 @@ export const InputField = ({
                     </ul>
                   </div>
                 );
-                console.log(state);
               } else {
                 setInputState("no-error");
                 setErrorMessage("Your Password is ok.");

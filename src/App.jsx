@@ -1,34 +1,100 @@
 // React Component
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputField } from "./components/InputField";
 import "./style.css";
 
 export default function App() {
   const [isClicked, setIsClicked] = useState(true);
   const [clearInput, setClearInput] = useState(false);
-  const [inputs,setInputs]= useState(["","","",""])
-  const [passwordState,setPasswordState]=useState("default-empty")
-  const [passwordMatch,setPasswordMatch]=useState(false)
+  const [inputs, setInputs] = useState([
+    { id: 0, state: "default-empty", value: "" },
+    { id: 1, state: "default-empty", value: "" },
+    { id: 2, state: "default-empty", value: "" },
+    { id: 3, state: "default-empty", value: "" },
+  ]);
+  const [passwordState, setPasswordState] = useState("default-empty");
+  const [passwordMatch, setPasswordMatch] = useState(false);
   const handleClick = () => {
     setIsClicked(!isClicked);
     setClearInput(!clearInput);
+    setInputs([
+      ["default-empty", ""],
+      ["default-empty", ""],
+      ["default-empty", ""],
+      ["default-empty", ""],
+    ]);
+    setPasswordState("default-empty");
+    setPasswordMatch(false);
   };
 
-  const handleInputCallback = (num, inputState,value) => {
-    inputs[num]=[inputState,value];
-    console.log(inputs)
-    if((inputs[2][1]===inputs[3][1]) && inputs[2][0]==="no-error" && inputs[3][0]==="no-error")
-    {
+  const handleInputCallback = (num, inputState, value) => {
+    const updatedInputs = inputs.map((input) => {
+      // Check if the current object's id matches the specified id
+      if (input.id === parseInt(num)) {
+        // Return a new object with updated state and value
+        return { ...input, state: inputState, value: value };
+      } else {
+        // Return the unchanged object
+        return input;
+      }
+    });
+
+    setInputs(updatedInputs);
+    console.log(inputs);
+  };
+
+  const handleSubmit = (event) => {
+    if (isClicked == true) {
+      if (
+        inputs.some(input => input.value === "")
+      ) {
+        event.preventDefault();
+        alert("Please fill all the inputs!");
+      } else {
+        if (passwordMatch == true) {
+          if (inputs[1].state == "no-error") {
+            if (inputs[0].value != "") {
+              event.preventDefault();
+              alert(event);
+              console.log(event);
+            } else {
+              event.preventDefault();
+              alert("Your username field is empty.");
+            }
+          } else {
+            event.preventDefault();
+            alert("Your email is wrong.");
+          }
+        } else {
+          event.preventDefault();
+          alert("Your passwords dont match!");
+        }
+      }
+    } else {
+      if (inputs.some(input => input.value === "")) {
+        event.preventDefault();
+        alert("Please fill all the inputs!");
+      } else {
+        event.preventDefault();
+        alert("logged in succesfully");
+      }
+    }
+  };
+  useEffect(() => {
+    if (
+      inputs[2].value === inputs[3].value &&
+      inputs[2].state === "no-error" &&
+      inputs[3].state === "no-error"
+    ) {
       setPasswordMatch(true);
+    } else {
+      setPasswordMatch(false);
     }
-    else{
-      setPasswordMatch(false)
-    }
-  };
-
+  }, [inputs]);
   return (
     <div className="desktop">
       <div className="frame">
+        {inputs[0].value}
         <img
           className="vector"
           alt="Vector"
@@ -69,7 +135,7 @@ export default function App() {
                   </div>
                 </button>
               </div>
-              <form className={"frame-6"}>
+              <form className={"frame-6"} onSubmit={handleSubmit}>
                 <div className="frame-7">
                   <InputField
                     className="input-field-instance"
@@ -92,43 +158,43 @@ export default function App() {
                     parentCallback={handleInputCallback}
                   />
 
-                  <InputField
-                    className="input-field-instance"
-                    divClassName="input-field-2"
-                    divClassNameOverride="input-field-4"
-                    labelStackClassName="design-component-instance-node"
-                    state="default-empty"
-                    text="Email"
-                    textInputClassName="input-field-3"
-                    valueContent="Email"
-                    type="email"
-                    icon="at"
-                    num="1"
-                    clearInput={clearInput}
-                    changed={clearInput}
-                    parentCallback={handleInputCallback}
-                  />
-
                   {isClicked && (
                     <InputField
                       className="input-field-instance"
                       divClassName="input-field-2"
                       divClassNameOverride="input-field-4"
                       labelStackClassName="design-component-instance-node"
-                      errorMessage="Your password should be 8 characters long."
-                      state={`${passwordState}`}
-                      text="Password"
+                      state="default-empty"
+                      text="Email"
                       textInputClassName="input-field-3"
-                      valueContent="Password"
-                      type="password"
-                      icon="lock"
-                      num="2"
+                      valueContent="Email"
+                      type="email"
+                      icon="at"
+                      num="1"
                       clearInput={clearInput}
                       changed={clearInput}
                       parentCallback={handleInputCallback}
-                      match={passwordMatch}
                     />
                   )}
+
+                  <InputField
+                    className="input-field-instance"
+                    divClassName="input-field-2"
+                    divClassNameOverride="input-field-4"
+                    labelStackClassName="design-component-instance-node"
+                    errorMessage="Your password should be 8 characters long."
+                    state={`${passwordState}`}
+                    text="Password"
+                    textInputClassName="input-field-3"
+                    valueContent="Password"
+                    type="password"
+                    icon="lock"
+                    num="2"
+                    clearInput={clearInput}
+                    changed={clearInput}
+                    parentCallback={handleInputCallback}
+                    match={passwordMatch}
+                  />
 
                   {isClicked && (
                     <InputField
