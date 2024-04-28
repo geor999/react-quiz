@@ -1,8 +1,9 @@
 // React Component
 import { useState } from "react";
-import "./pages/style.css";
+import "./pages/Authentication/style.css";
 import {Routes,Route,Link } from "react-router-dom";
-import Authentication from "./pages/Authentication";
+import Authentication from "./pages/Authentication/Authentication";
+import Menu from "./pages/Menu/Menu";
 
 export default function Root() {
   const [darkMode, setDarkMode] = useState(false);
@@ -25,7 +26,7 @@ export default function Root() {
       </div>
       <Routes>
         <Route path="/" element={<Authentication rootDarkMode={darkMode}/>}/>
-        <Route path="/giannis" element={<div>giannis</div>}/>
+        <Route path="/menu" element={<Menu rootDarkMode={darkMode} loggedIn/>}/>
         <Route />
       </Routes>
     </div>
